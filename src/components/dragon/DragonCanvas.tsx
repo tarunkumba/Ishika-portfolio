@@ -4,7 +4,7 @@ import { useAnimations, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { clone as cloneSkinned } from "three/examples/jsm/utils/SkeletonUtils.js";
+import { SkeletonUtils } from "three-stdlib";
 
 const MODEL_URL = "/assets/models/dragon-evolved.glb";
 
@@ -69,7 +69,7 @@ function DragonModel({
   const { scene, animations } = useGLTF(MODEL_URL);
 
   const cloned = useMemo(() => {
-    const next = cloneSkinned(scene);
+    const next = SkeletonUtils.clone(scene);
     boostMaterials(next);
     return next;
   }, [scene]);
