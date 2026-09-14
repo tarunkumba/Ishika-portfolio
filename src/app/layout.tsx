@@ -53,7 +53,7 @@ const greatVibes = Great_Vibes({
 export const metadata: Metadata = {
   title: "Ishika — Product Designer",
   description:
-    "Ishika — Product Designer in Chicago. Currently at Meridian Health.",
+    "Ishika — Product Designer in Mumbai. Currently at Meridian Health.",
   icons: {
     icon: "/favicon.svg",
   },

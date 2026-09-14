@@ -155,7 +155,7 @@ export function Hero() {
           />
           <FloatingLabel
             className="hero__label hero__label--previous"
-            label="Previously at Searchless AI"
+            label="Currently at HowNow"
             tone="peach"
             motion="drift"
             icon={<SearchIcon />}
@@ -184,7 +184,7 @@ export function Hero() {
           />
           <FloatingLabel
             className="hero__label hero__label--location"
-            label="Chicago, IL"
+            label="Mumbai"
             tone="pink"
             motion="sway"
             pointer="left"

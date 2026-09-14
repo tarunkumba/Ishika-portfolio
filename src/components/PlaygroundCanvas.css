@@ -1,0 +1,99 @@
+.playground-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  background: #ffffff;
+}
+
+.playground-canvas__grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.playground-canvas__grid svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.playground-canvas__world {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.playground-canvas__card {
+  position: absolute;
+  cursor: grab;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.playground-canvas__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Restore grab cursors on the playground (override site Pikachu cursor) */
+body:has(.playground-page),
+body:has(.playground-page) * {
+  cursor: inherit;
+}
+
+body:has(.playground-page) .playground-canvas {
+  cursor: grab !important;
+}
+
+body:has(.playground-page) .playground-canvas:active {
+  cursor: grabbing !important;
+}
+
+body:has(.playground-page) .playground-canvas__card {
+  cursor: grab !important;
+}
+
+body:has(.playground-page) .et-navbar,
+body:has(.playground-page) .et-navbar * {
+  cursor: pointer !important;
+}
+
+body:has(.playground-page) .et-navbar {
+  z-index: 40;
+}
+
+body:has(.playground-page) .page > main {
+  min-height: 100vh;
+  padding: 0;
+}
+
+body:has(.playground-page) .site-footer,
+body:has(.playground-page) .custom-cursor,
+body:has(.playground-page) .intro__toggle {
+  display: none !important;
+}
+
+.playground-page .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

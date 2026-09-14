@@ -1,0 +1,230 @@
+.interactive-frame {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  vertical-align: top;
+  /* Slot reserves layout space after priming — prevents hero shift */
+}
+
+.interactive-frame__surface {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  transition:
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+.interactive-frame__surface:hover {
+  border-color: #2bb8e8;
+}
+
+.interactive-frame.is-selected .interactive-frame__surface,
+.interactive-frame__surface:focus-visible {
+  border-color: #36c5f0;
+  box-shadow: 0 0 0 1px rgba(54, 197, 240, 0.35);
+}
+
+.interactive-frame.is-selected {
+  z-index: 6;
+}
+
+.interactive-frame.is-selected .interactive-frame__surface,
+.interactive-frame__surface.is-dragging,
+.interactive-frame__surface.is-resizing {
+  z-index: 6;
+}
+
+.interactive-frame__surface.is-dragging {
+  cursor: grabbing;
+}
+
+.interactive-frame__surface.is-resizing {
+  cursor: inherit;
+}
+
+.interactive-frame__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.interactive-frame__content > * {
+  pointer-events: none;
+}
+
+/* Default L-corners — same visual language as the existing hero name box */
+.interactive-frame__corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.interactive-frame__corners span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid var(--nudge-border, #36c5f0);
+  background: var(--nudge-paper, #ffffff);
+  transition: opacity 160ms ease;
+}
+
+.interactive-frame__corners span:nth-child(1) {
+  top: -8px;
+  left: -8px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.interactive-frame__corners span:nth-child(2) {
+  top: -8px;
+  right: -8px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.interactive-frame__corners span:nth-child(3) {
+  bottom: -8px;
+  left: -8px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.interactive-frame__corners span:nth-child(4) {
+  right: -8px;
+  bottom: -8px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Soften L-corners slightly when square handles take over */
+.interactive-frame.is-selected .interactive-frame__corners span {
+  opacity: 0.35;
+}
+
+.interactive-frame__handles {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.interactive-frame.is-selected .interactive-frame__handles {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.interactive-frame__handle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1.5px solid #36c5f0;
+  border-radius: 1px;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: transform 160ms ease;
+}
+
+.interactive-frame.is-selected .interactive-frame__handle {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.interactive-frame__handle--nw {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.interactive-frame__handle--n {
+  top: 0;
+  left: 50%;
+  cursor: ns-resize;
+}
+
+.interactive-frame__handle--ne {
+  top: 0;
+  left: 100%;
+  cursor: nesw-resize;
+}
+
+.interactive-frame__handle--e {
+  top: 50%;
+  left: 100%;
+  cursor: ew-resize;
+}
+
+.interactive-frame__handle--se {
+  top: 100%;
+  left: 100%;
+  cursor: nwse-resize;
+}
+
+.interactive-frame__handle--s {
+  top: 100%;
+  left: 50%;
+  cursor: ns-resize;
+}
+
+.interactive-frame__handle--sw {
+  top: 100%;
+  left: 0;
+  cursor: nesw-resize;
+}
+
+.interactive-frame__handle--w {
+  top: 50%;
+  left: 0;
+  cursor: ew-resize;
+}
+
+.interactive-frame__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (pointer: coarse) {
+  .interactive-frame__handle {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Keep interaction, but don’t let a huge frame dominate mobile */
+  .interactive-frame__surface.is-dragging,
+  .interactive-frame__surface.is-resizing {
+    touch-action: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-frame__surface,
+  .interactive-frame__handles,
+  .interactive-frame__handle,
+  .interactive-frame__corners span {
+    transition: none;
+  }
+}

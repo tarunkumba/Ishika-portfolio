@@ -1,0 +1,15 @@
+.roaming-dragon {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.roaming-dragon canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+  pointer-events: none;
+}

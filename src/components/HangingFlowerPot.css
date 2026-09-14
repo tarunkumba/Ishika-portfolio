@@ -1,0 +1,25 @@
+.hanging-flower-pot {
+  position: fixed;
+  top: 0;
+  left: 28px;
+  z-index: 35;
+  width: min(200px, 26vw);
+  height: min(320px, 46vh);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hanging-flower-pot canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .hanging-flower-pot {
+    width: min(160px, 40vw);
+    height: min(260px, 40vh);
+  }
+}

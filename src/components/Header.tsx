@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useRef, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import { usePathname } from "next/navigation";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   Briefcase01Icon,
+  GameController02Icon,
   Home01Icon,
-  Linkedin01Icon,
   Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import "./Header.css";
@@ -13,7 +14,7 @@ import "./Header.css";
 export const copy = {
   home: "Home",
   work: "Work",
-  linkedin: "LinkedIn",
+  playground: "Playground",
   contactMe: "Contact me",
 } as const;
 
@@ -31,10 +32,10 @@ const links = [
     icon: Briefcase01Icon,
   },
   {
-    href: "https://www.linkedin.com/",
-    label: copy.linkedin,
-    external: true,
-    icon: Linkedin01Icon,
+    href: "/playground",
+    label: copy.playground,
+    external: false,
+    icon: GameController02Icon,
   },
   {
     href: "#contact",
@@ -45,10 +46,15 @@ const links = [
 ] as const;
 
 export function Header() {
+  const pathname = usePathname();
   const pillRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<(typeof links)[number]["href"]>(
-    links[0].href,
+    pathname === "/playground" ? "/playground" : "#top",
   );
+
+  useEffect(() => {
+    setActive(pathname === "/playground" ? "/playground" : "#top");
+  }, [pathname]);
 
   const onPillMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
     const pill = pillRef.current;
@@ -77,10 +83,17 @@ export function Header() {
 
         {links.map((link) => {
           const isActive = !link.external && active === link.href;
+          const href =
+            link.href === "#top" && pathname !== "/"
+              ? "/"
+              : link.href.startsWith("#") && pathname !== "/"
+                ? `/${link.href}`
+                : link.href;
+
           return (
             <a
               key={link.href}
-              href={link.href}
+              href={href}
               className={`et-navbar__link${isActive ? " is-active" : ""}`}
               {...(link.external
                 ? { target: "_blank", rel: "noopener noreferrer" }

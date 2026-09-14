@@ -1,0 +1,580 @@
+.nudge-hero {
+  --nudge-ink: #111212;
+  --nudge-paper: #ffffff;
+  --nudge-cyan: #a4e5f8;
+  --nudge-border: #36c5f0;
+  --nudge-mint: #c2d9e7;
+  --nudge-rose: #e01e5a;
+  --nudge-tag-current: #a1dfc5;
+  --nudge-tag-previous: #f5dda1;
+  --nudge-chip-role: #ecb22e;
+  --nudge-chip-place: #e01e5a;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1100px;
+  height: 100%;
+  margin-inline: auto;
+  padding: 0 clamp(0.75rem, 3vw, 2rem);
+  overflow: visible;
+  animation: nudge-rise 700ms var(--ease, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.nudge-hero__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.1rem, 2.8vh, 1.65rem);
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  text-align: center;
+  overflow: visible;
+}
+
+.nudge-hero__identity {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.nudge-hero__eyebrow-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nudge-hero__eyebrow {
+  margin: 0;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  color: var(--nudge-ink);
+}
+
+.nudge-hero__eyebrow-rule {
+  display: block;
+  width: 2.75rem;
+  height: 2px;
+  background: var(--nudge-ink);
+  opacity: 0.35;
+}
+
+.nudge-hero__name-wrap {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.85rem;
+}
+
+.nudge-hero__name-box {
+  position: relative;
+  z-index: 2;
+  padding: clamp(1.1rem, 2.4vw, 1.85rem) clamp(1.6rem, 4vw, 2.6rem)
+    clamp(0.55rem, 1.2vw, 0.85rem);
+  border: 3px solid var(--nudge-border);
+  background: var(--nudge-paper);
+}
+
+.nudge-hero__corners span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2.5px solid var(--nudge-border);
+  background: var(--nudge-paper);
+}
+
+.nudge-hero__corners span:nth-child(1) {
+  top: -8px;
+  left: -8px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.nudge-hero__corners span:nth-child(2) {
+  top: -8px;
+  right: -8px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.nudge-hero__corners span:nth-child(3) {
+  bottom: -8px;
+  left: -8px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.nudge-hero__corners span:nth-child(4) {
+  right: -8px;
+  bottom: -8px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.nudge-hero__name {
+  margin: 0;
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-size: clamp(3.6rem, 12vw, 7rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  color: var(--nudge-ink);
+}
+
+/* Floating tags sit ABOVE the framed name — nudge placement */
+.nudge-hero__tag {
+  position: absolute;
+  z-index: 4;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--nudge-ink);
+  white-space: nowrap;
+  box-shadow: 0 12px 28px rgba(17, 18, 18, 0.12);
+  pointer-events: none;
+}
+
+.nudge-hero__tag--current {
+  top: -3.45rem;
+  left: 0.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transform: rotate(14deg);
+  transform-origin: left bottom;
+  background: var(--nudge-tag-current);
+}
+
+.nudge-hero__tag-hownow {
+  display: inline-block;
+  height: 0.95em;
+  width: auto;
+  vertical-align: -0.12em;
+}
+
+.nudge-hero__tag--previous {
+  top: -3.05rem;
+  right: 0.05rem;
+  left: auto;
+  transform: rotate(-8deg);
+  transform-origin: right bottom;
+  background: var(--nudge-tag-previous);
+}
+
+.nudge-hero__available {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0.15rem 0 0;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.12rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--nudge-ink);
+}
+
+.nudge-hero__dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45);
+  animation: nudge-pulse 1.8s ease-out infinite;
+}
+
+.nudge-hero__lower {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.35rem;
+  width: 100%;
+}
+
+.nudge-hero__lede {
+  margin: 0 auto;
+  max-width: 28rem;
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-size: clamp(1.45rem, 3.4vw, 2.35rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--nudge-ink);
+  text-align: center;
+}
+
+.nudge-hero__inline {
+  display: inline-block;
+  height: 1em;
+  width: auto;
+  margin: 0 0.08em;
+  vertical-align: -0.18em;
+}
+
+.nudge-hero__inline--spin {
+  animation: nudge-inline-spin 8s linear infinite;
+}
+
+@keyframes nudge-inline-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nudge-hero__inline--spin {
+    animation: none;
+  }
+}
+
+.nudge-hero__actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 36rem);
+  min-height: 7.5rem;
+  margin-inline: auto;
+  overflow: visible;
+}
+
+.nudge-hero__cta {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.35rem;
+  padding: 0.55rem 1.15rem 0.55rem 0.55rem;
+  border: 1.5px solid var(--nudge-ink);
+  background: var(--nudge-ink);
+  color: #fff;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.nudge-hero__cta:hover {
+  transform: translateY(-2px);
+  background: #222;
+}
+
+.nudge-hero__cta-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  overflow: hidden;
+  background: var(--nudge-mint);
+}
+
+.nudge-hero__cta-arrow,
+.nudge-hero__cta-spark {
+  grid-area: 1 / 1;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--nudge-ink);
+}
+
+.nudge-hero__cta-spark {
+  color: var(--nudge-rose);
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.nudge-hero__cta:hover .nudge-hero__cta-spark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nudge-hero__cta:hover .nudge-hero__cta-arrow {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+.nudge-hero__cta-arrow {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.nudge-hero__cta-arrow svg,
+.nudge-hero__cta-spark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nudge-hero__chip {
+  --repel-x: 0px;
+  --repel-y: 0px;
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 16px 24px;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--nudge-ink);
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.nudge-hero__chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--nudge-ink);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.nudge-hero__chip-label {
+  position: relative;
+  z-index: 1;
+}
+
+.nudge-hero__chip-cursor {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Product designer — yellow, square top-right, cursor outside top-right */
+.nudge-hero__chip--role {
+  left: 3%;
+  top: 62%;
+  border-radius: 24px 0 24px 24px;
+  background: var(--nudge-chip-role);
+  transform: translate(-50%, -50%) translate(var(--repel-x), var(--repel-y));
+  animation: nudge-chip-role 5s cubic-bezier(0.44, 0, 0.56, 1) infinite;
+}
+
+/* Same overhang as place chip: 23px outside the square corner, 18px above */
+.nudge-hero__chip-cursor--role {
+  top: -18px;
+  left: calc(100% - 5px);
+  right: auto;
+  width: 28px;
+  height: 26px;
+  transform: rotate(99deg);
+  transform-origin: center center;
+}
+
+/* Place (Mumbai) — pink, square top-left, white type, cursor outside top-left */
+.nudge-hero__chip--place {
+  left: 79%;
+  top: 20%;
+  border-radius: 0 24px 24px 24px;
+  background: var(--nudge-chip-place);
+  color: #ffffff;
+  transform: translate(-50%, -50%) rotate(-15deg) translate(var(--repel-x), var(--repel-y));
+  animation: nudge-chip-place 8s cubic-bezier(0.44, 0, 0.56, 1) infinite;
+}
+
+.nudge-hero__chip-cursor--place {
+  top: -18px;
+  left: -23px;
+  width: 28px;
+  height: 26px;
+}
+
+/* Mirror-loop motion pulled from nudge Framer values (scaled for this stage) */
+@keyframes nudge-chip-role {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translate(var(--repel-x), var(--repel-y))
+      rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%)
+      translate(calc(var(--repel-x) + 72px), calc(var(--repel-y) - 62px))
+      rotate(18deg);
+  }
+}
+
+@keyframes nudge-chip-place {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) rotate(-15deg)
+      translate(var(--repel-x), var(--repel-y));
+  }
+  50% {
+    transform: translate(-50%, -50%)
+      translate(calc(var(--repel-x) - 36px), calc(var(--repel-y) - 52px))
+      rotate(8deg);
+  }
+}
+
+@keyframes nudge-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nudge-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+@media (max-width: 1100px) {
+  .nudge-hero__chip--role {
+    left: 8%;
+  }
+
+  .nudge-hero__chip--place {
+    left: 88%;
+  }
+}
+
+@media (max-width: 860px) {
+  .nudge-hero__tag {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.74rem;
+  }
+
+  .nudge-hero__tag--current {
+    top: -2.8rem;
+  }
+
+  .nudge-hero__tag--previous {
+    top: -2.5rem;
+  }
+
+  .nudge-hero__chip {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+
+  @keyframes nudge-chip-role {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) translate(var(--repel-x), var(--repel-y))
+        rotate(0deg);
+    }
+    50% {
+      transform: translate(-50%, -50%)
+        translate(calc(var(--repel-x) + 40px), calc(var(--repel-y) - 36px))
+        rotate(14deg);
+    }
+  }
+
+  @keyframes nudge-chip-place {
+    0%,
+    100% {
+      transform: translate(-50%, -50%) rotate(-15deg)
+        translate(var(--repel-x), var(--repel-y));
+    }
+    50% {
+      transform: translate(-50%, -50%)
+        translate(calc(var(--repel-x) - 22px), calc(var(--repel-y) - 34px))
+        rotate(4deg);
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .nudge-hero__chip--role,
+  .nudge-hero__chip--place {
+    display: none;
+  }
+
+  .nudge-hero__name-wrap {
+    margin-top: 2.5rem;
+  }
+
+  .nudge-hero__tag--current {
+    top: -2.55rem;
+    left: -0.25rem;
+  }
+
+  .nudge-hero__tag--previous {
+    top: -2.35rem;
+    right: -0.25rem;
+  }
+
+  .nudge-hero__actions {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .nudge-hero__tag {
+    padding: 0.45rem 0.55rem;
+    font-size: 0.62rem;
+  }
+
+  .nudge-hero__name {
+    font-size: clamp(2.9rem, 16vw, 3.8rem);
+  }
+
+  .nudge-hero__lede {
+    max-width: 19rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nudge-hero,
+  .nudge-hero__dot,
+  .nudge-hero__chip--role,
+  .nudge-hero__chip--place {
+    animation: none;
+  }
+
+  .nudge-hero__chip--role {
+    transform: translate(-50%, -50%);
+  }
+
+  .nudge-hero__chip--place {
+    transform: translate(-50%, -50%) rotate(-15deg);
+  }
+}

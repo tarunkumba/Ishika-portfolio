@@ -18,6 +18,8 @@ const eslintConfig = [
       "src/components/precious-channel-784858-framer-app-optimized/**",
       "src/components/displacementgrid-framer-website-optimized/**",
       "src/components/welcomed-experience-850387-framer-app-optimized/**",
+      "src/components/nudge-folio-framer-website-optimized/**",
+      "src/components/3d-business-card-framer-website-optimized/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
