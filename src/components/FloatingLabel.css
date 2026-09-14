@@ -1,0 +1,242 @@
+.float-tag {
+  --float-rot: 0deg;
+  --float-duration: 7s;
+  --float-delay: 0s;
+  position: absolute;
+  z-index: 3;
+  width: max-content;
+  filter: drop-shadow(0 10px 22px rgba(17, 17, 17, 0.08));
+  animation: float-drift var(--float-duration) ease-in-out infinite;
+  animation-delay: var(--float-delay);
+  will-change: transform;
+}
+
+.float-tag--bob {
+  animation-name: float-bob;
+}
+
+.float-tag--orbit {
+  animation-name: float-orbit;
+}
+
+.float-tag--sway {
+  animation-name: float-sway;
+}
+
+.float-tag__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.58rem 0.95rem 0.58rem 0.65rem;
+  border-radius: 999px;
+  background: var(--cream);
+  transform: rotate(var(--float-rot));
+  transition: transform 280ms var(--ease), box-shadow 280ms var(--ease);
+}
+
+.float-tag:hover .float-tag__chip {
+  transform: rotate(var(--float-rot)) translateY(-3px) scale(1.035);
+  box-shadow: var(--shadow-soft);
+}
+
+.float-tag__icon {
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.float-tag__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.float-tag__dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.22);
+  flex-shrink: 0;
+}
+
+.float-tag__text {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.float-tag--mint .float-tag__chip {
+  background: var(--mint);
+}
+
+.float-tag--mint .float-tag__icon {
+  color: var(--mint-deep);
+}
+
+.float-tag--peach .float-tag__chip {
+  background: var(--peach);
+}
+
+.float-tag--peach .float-tag__icon {
+  color: var(--peach-deep);
+}
+
+.float-tag--lavender .float-tag__chip {
+  background: var(--lavender);
+}
+
+.float-tag--lavender .float-tag__icon {
+  color: var(--lavender-deep);
+}
+
+.float-tag--pink .float-tag__chip {
+  background: var(--pink);
+}
+
+.float-tag--pink .float-tag__icon {
+  color: var(--pink-deep);
+}
+
+.float-tag__pointer {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.float-tag__pointer--down {
+  left: 26%;
+  bottom: -7px;
+  border-width: 8px 7px 0 7px;
+  border-color: currentColor transparent transparent transparent;
+}
+
+.float-tag__pointer--up {
+  right: 18%;
+  top: -7px;
+  border-width: 0 7px 8px 7px;
+  border-color: transparent transparent currentColor transparent;
+}
+
+.float-tag__pointer--left {
+  left: -7px;
+  top: 40%;
+  border-width: 7px 8px 7px 0;
+  border-color: transparent currentColor transparent transparent;
+}
+
+.float-tag__pointer--right {
+  right: -7px;
+  top: 38%;
+  border-width: 7px 0 7px 8px;
+  border-color: transparent transparent transparent currentColor;
+}
+
+.float-tag--mint {
+  color: var(--mint);
+}
+
+.float-tag--peach {
+  color: var(--peach);
+}
+
+.float-tag--lavender {
+  color: var(--lavender);
+}
+
+.float-tag--pink {
+  color: var(--pink);
+}
+
+@keyframes float-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(8px, -10px) rotate(1.5deg);
+  }
+  66% {
+    transform: translate(-6px, 6px) rotate(-1.2deg);
+  }
+}
+
+@keyframes float-bob {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(4px, -12px) rotate(-1.8deg);
+  }
+}
+
+@keyframes float-orbit {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(10px, -4px) rotate(2deg);
+  }
+  50% {
+    transform: translate(2px, 10px) rotate(0.3deg);
+  }
+  75% {
+    transform: translate(-9px, 2px) rotate(-1.7deg);
+  }
+}
+
+@keyframes float-sway {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  40% {
+    transform: translate(-10px, -6px) rotate(-2.2deg);
+  }
+  70% {
+    transform: translate(7px, 8px) rotate(1.4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-tag {
+    animation: none;
+  }
+
+  .float-tag:hover .float-tag__chip {
+    transform: rotate(var(--float-rot));
+  }
+}
+
+@media (max-width: 960px) {
+  .float-tag {
+    position: relative;
+    inset: auto !important;
+    filter: none;
+  }
+
+  .float-tag__chip {
+    transform: rotate(0deg) !important;
+  }
+
+  .float-tag:hover .float-tag__chip {
+    transform: translateY(-2px) scale(1.02) !important;
+  }
+
+  .float-tag__pointer {
+    display: none;
+  }
+
+  .float-tag__text {
+    white-space: normal;
+  }
+}

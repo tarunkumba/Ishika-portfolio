@@ -1,0 +1,244 @@
+.site-footer {
+  position: relative;
+  margin-top: auto;
+  padding: 0 0 2rem;
+  background: #09090b;
+  color: #fafafa;
+  overflow: clip;
+}
+
+.site-footer__cap {
+  height: 48px;
+  width: 100%;
+  background: #fafafa;
+  border-bottom-left-radius: 48px;
+  border-bottom-right-radius: 48px;
+  box-shadow:
+    0 0.6px 0.6px -1.25px rgba(0, 0, 0, 0.18),
+    0 2.3px 2.3px -2.5px rgba(0, 0, 0, 0.16),
+    0 10px 10px -3.75px rgba(0, 0, 0, 0.06);
+}
+
+.site-footer__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 4rem 1rem 3.5rem;
+}
+
+.site-footer__eyes {
+  display: flex;
+  padding: 0.65rem 4rem;
+}
+
+.site-footer__eyes-pair {
+  position: relative;
+  width: 56px;
+  height: 36px;
+  transform: scale(1.5);
+  transform-origin: left center;
+}
+
+.site-footer__eye {
+  position: absolute;
+  top: 0;
+  width: 24px;
+  height: 36px;
+  overflow: visible;
+}
+
+.site-footer__eye:first-child {
+  left: 0;
+}
+
+.site-footer__eye:last-child {
+  right: 0;
+}
+
+.site-footer__socket {
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  background: rgb(255, 254, 253);
+}
+
+.site-footer__track {
+  position: absolute;
+  top: 7px;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.site-footer__follow {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.site-footer__iris {
+  position: relative;
+  width: 16px;
+  height: 22px;
+  border-radius: 100%;
+  background: rgb(12, 12, 12);
+}
+
+.site-footer__glint {
+  position: absolute;
+  bottom: 3px;
+  left: calc(50% - 1.5px);
+  width: 3px;
+  height: 3px;
+  border-radius: 100%;
+  background: rgb(255, 254, 253);
+  z-index: 1;
+}
+
+@media (max-width: 900px) {
+  .site-footer__eyes {
+    padding: 1rem 0 0;
+  }
+}
+
+.site-footer__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 3rem 3rem 2rem;
+}
+
+.site-footer__connect {
+  margin: 0;
+  flex: 1;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 140%;
+  color: #fafafa;
+}
+
+.site-footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.site-footer__btn {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  border: 1px solid #27272a;
+  background: #18181b;
+  color: #e4e4e7;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms var(--ease);
+}
+
+.site-footer__btn:hover {
+  background: #27272a;
+  border-color: #3f3f46;
+  transform: translateY(-1px);
+}
+
+.site-footer__name {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 3rem 3rem 0;
+  border: 0;
+  background: transparent;
+  font-family: "PP Editorial New", Georgia, serif;
+  font-size: clamp(3.5rem, 12vw, 11rem);
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-align: left;
+  color: #fafafa;
+  cursor: pointer;
+}
+
+.site-footer__name:hover {
+  opacity: 0.88;
+}
+
+.site-footer__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 0 4rem;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #a1a1aa;
+}
+
+.site-footer__meta p {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .site-footer__cap {
+    height: 38px;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+  }
+
+  .site-footer__inner {
+    gap: 2rem;
+    padding: 4rem 1.5rem 3rem;
+  }
+
+  .site-footer__eyes {
+    padding: 1rem 0 0;
+  }
+
+  .site-footer__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .site-footer__connect {
+    font-size: 15px;
+    line-height: 130%;
+  }
+
+  .site-footer__btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .site-footer__name {
+    padding: 0;
+    font-size: clamp(4rem, 22vw, 8rem);
+  }
+
+  .site-footer__meta {
+    padding: 0;
+    margin-top: 0.5rem;
+  }
+}

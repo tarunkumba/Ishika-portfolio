@@ -1,0 +1,109 @@
+.files-folder {
+  width: 146px;
+  height: auto;
+  position: relative;
+  pointer-events: auto;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.files-folder__stack {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+.files-folder__tab {
+  position: absolute;
+  top: 59px;
+  left: 0;
+  width: 146px;
+  height: 55px;
+  z-index: 1;
+  overflow: visible;
+}
+
+.files-folder__paper {
+  position: absolute;
+  left: calc(46.5753% - 56.5px);
+  width: 113px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0 0.35rem;
+  border-radius: 5px;
+  background: #f2f2f2;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.12),
+    0 6px 12px rgba(0, 0, 0, 0.08);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #1a1a1a;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 2;
+  transition:
+    transform 420ms var(--ease),
+    top 420ms var(--ease),
+    bottom 420ms var(--ease);
+}
+
+.files-folder__paper--cover-letter {
+  bottom: 58px;
+}
+
+.files-folder__paper--resume {
+  bottom: 42px;
+}
+
+.files-folder__front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 96px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #5fc6f5 65%, #4db4e8 100%);
+  box-shadow:
+    -1px -2px 2px rgba(0, 0, 0, 0.12),
+    -6px -10px 18px rgba(0, 0, 0, 0.08);
+  z-index: 3;
+  overflow: hidden;
+}
+
+.files-folder__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    transparent 42%
+  );
+  pointer-events: none;
+}
+
+.files-folder:hover .files-folder__paper--cover-letter,
+.files-folder:focus-within .files-folder__paper--cover-letter {
+  bottom: auto;
+  top: 36px;
+  left: calc(49.3151% - 56.5px);
+  transform: translateY(-6px) rotate(-2deg);
+}
+
+.files-folder:hover .files-folder__paper--resume,
+.files-folder:focus-within .files-folder__paper--resume {
+  bottom: auto;
+  top: 62px;
+  left: calc(49.3151% - 56.5px);
+  transform: translateY(-4px) rotate(1.5deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .files-folder__paper {
+    transition: none;
+  }
+}
