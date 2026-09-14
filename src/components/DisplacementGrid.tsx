@@ -58,7 +58,7 @@ export function DisplacementGrid({
     // restX, restY, x, y, vx, vy — 6 floats per point
     let points: Float32Array | null = null;
     let reduced = false;
-    let start = performance.now();
+    const start = performance.now();
 
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
