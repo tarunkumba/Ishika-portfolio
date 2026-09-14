@@ -177,7 +177,7 @@
   font-weight: 700;
 }
 
-/* —— Hero 2: nudge-folio inspired —— */
+/* —— Hero —— */
 .intro--v2 {
   display: flex;
   flex-direction: column;
@@ -185,46 +185,6 @@
   justify-content: flex-start;
   padding: 5.25rem clamp(1rem, 3vw, 2.5rem) 0;
   overflow: visible;
-}
-
-/* —— Version toggle —— */
-.intro__toggle {
-  position: fixed;
-  right: 1.1rem;
-  bottom: 1.1rem;
-  z-index: 60;
-  display: inline-flex;
-  gap: 0.2rem;
-  padding: 0.28rem;
-  border-radius: 999px;
-  background: rgba(18, 18, 18, 0.92);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(12px);
-}
-
-.intro__toggle button {
-  border: 0;
-  border-radius: 999px;
-  padding: 0.45rem 0.85rem;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.62);
-  font-family: var(--font-geist), system-ui, sans-serif;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  transition:
-    background 160ms ease,
-    color 160ms ease;
-}
-
-.intro__toggle button.is-active {
-  background: #c8f54b;
-  color: #111;
-}
-
-.intro__toggle button:hover:not(.is-active) {
-  color: #fff;
 }
 
 .intro__actions {
@@ -485,10 +445,6 @@
     line-height: 1.45;
   }
 
-  .intro__toggle {
-    right: 0.75rem;
-    bottom: 0.75rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

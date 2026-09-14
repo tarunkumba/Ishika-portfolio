@@ -81,8 +81,7 @@ body:has(.playground-page) .page > main {
 }
 
 body:has(.playground-page) .site-footer,
-body:has(.playground-page) .custom-cursor,
-body:has(.playground-page) .intro__toggle {
+body:has(.playground-page) .custom-cursor {
   display: none !important;
 }
 
