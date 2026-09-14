@@ -62,7 +62,7 @@ export function Intro() {
 
           <div className="intro__stage">
             <PhotoFrame
-              src="/assets/img/ishika-portrait.webp"
+              src="/assets/img/ishika-portrait.webp?v=2"
               alt="Ishika Dixit"
               caption="that's me"
             />
@@ -79,7 +79,7 @@ export function Intro() {
         <div className="intro__row">
           <div className="intro__row-photo">
             <PhotoFrame
-              src="/assets/img/ishika-portrait.webp"
+              src="/assets/img/ishika-portrait.webp?v=2"
               alt="Ishika Dixit"
               caption="that's me"
             />
