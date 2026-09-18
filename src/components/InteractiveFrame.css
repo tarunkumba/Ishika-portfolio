@@ -41,6 +41,35 @@
   z-index: 6;
 }
 
+/* Name frame: keep grab affordance above site cursor override */
+.nudge-hero .interactive-frame__surface {
+  cursor: grab !important;
+}
+
+.nudge-hero .interactive-frame__surface.is-dragging {
+  cursor: grabbing !important;
+}
+
+.nudge-hero .interactive-frame__handle--nw,
+.nudge-hero .interactive-frame__handle--se {
+  cursor: nwse-resize !important;
+}
+
+.nudge-hero .interactive-frame__handle--ne,
+.nudge-hero .interactive-frame__handle--sw {
+  cursor: nesw-resize !important;
+}
+
+.nudge-hero .interactive-frame__handle--n,
+.nudge-hero .interactive-frame__handle--s {
+  cursor: ns-resize !important;
+}
+
+.nudge-hero .interactive-frame__handle--e,
+.nudge-hero .interactive-frame__handle--w {
+  cursor: ew-resize !important;
+}
+
 .interactive-frame__surface.is-dragging {
   cursor: grabbing;
 }
@@ -191,6 +220,39 @@
   top: 50%;
   left: 0;
   cursor: ew-resize;
+}
+
+/* Sticker variant — always-selected Figma selection chrome */
+.interactive-frame--sticker {
+  z-index: 5;
+}
+
+.interactive-frame--sticker .interactive-frame__surface {
+  padding: 8px;
+  border: 1.5px solid #0099ff;
+  background: transparent;
+  box-shadow: none;
+}
+
+.interactive-frame--sticker .interactive-frame__surface:hover,
+.interactive-frame--sticker.is-selected .interactive-frame__surface,
+.interactive-frame--sticker .interactive-frame__surface:focus-visible {
+  border-color: #0099ff;
+  box-shadow: none;
+}
+
+.interactive-frame--sticker .interactive-frame__handles {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.interactive-frame--sticker .interactive-frame__handle {
+  border-color: #0099ff;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.interactive-frame--sticker.is-selected {
+  z-index: 8;
 }
 
 .interactive-frame__sr {

@@ -4,6 +4,7 @@ import { DisplacementGrid } from "./DisplacementGrid";
 import { NudgeHero } from "./NudgeHero";
 import { RoamingDragon } from "./RoamingDragon";
 import { HangingFlowerPot } from "./HangingFlowerPot";
+import { FigmaSelectionStickers } from "./FigmaSelectionStickers";
 import "./Intro.css";
 
 export function Intro() {
@@ -17,6 +18,7 @@ export function Intro() {
       <HangingFlowerPot />
       <RoamingDragon />
       <NudgeHero />
+      <FigmaSelectionStickers />
     </section>
   );
 }

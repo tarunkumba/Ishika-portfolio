@@ -1,0 +1,20 @@
+.framer-card-stack {
+  position: relative;
+  width: 100%;
+  background: #ffffff;
+  isolation: isolate;
+}
+
+.framer-card-stack__frame {
+  display: block;
+  width: 100%;
+  height: clamp(480px, 72vh, 760px);
+  border: 0;
+  background: #ffffff;
+}
+
+@media (max-width: 809px) {
+  .framer-card-stack__frame {
+    height: 620px;
+  }
+}

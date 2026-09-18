@@ -24,8 +24,8 @@ type FrameRect = {
 
 const HANDLES: Handle[] = ["nw", "n", "ne", "e", "se", "s", "sw", "w"];
 
-const MIN_W = 160;
-const MIN_H = 72;
+const DEFAULT_MIN_W = 160;
+const DEFAULT_MIN_H = 72;
 const ARROW_STEP = 1;
 const ARROW_STEP_FAST = 10;
 
@@ -46,6 +46,10 @@ type InteractiveFrameProps = {
   /** Extra class on the framed surface (keeps existing name-box styles) */
   surfaceClassName?: string;
   "aria-label"?: string;
+  /** Sticker frames stay visually selected and skip L-corners */
+  variant?: "default" | "sticker";
+  minWidth?: number;
+  minHeight?: number;
 };
 
 export function InteractiveFrame({
@@ -53,17 +57,24 @@ export function InteractiveFrame({
   className = "",
   surfaceClassName = "",
   "aria-label": ariaLabel = "Interactive frame",
+  variant = "default",
+  minWidth,
+  minHeight,
 }: InteractiveFrameProps) {
+  const isSticker = variant === "sticker";
+  const baseMinW = minWidth ?? (isSticker ? 40 : DEFAULT_MIN_W);
+  const baseMinH = minHeight ?? (isSticker ? 40 : DEFAULT_MIN_H);
+
   const slotRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const rectRef = useRef<FrameRect>({ x: 0, y: 0, w: 0, h: 0 });
-  const minRef = useRef({ w: MIN_W, h: MIN_H });
+  const minRef = useRef({ w: baseMinW, h: baseMinH });
   const modeRef = useRef<Mode>(null);
-  const selectedRef = useRef(false);
+  const selectedRef = useRef(isSticker);
   const rafRef = useRef(0);
   const primedRef = useRef(false);
 
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState(isSticker);
   const labelId = useId();
 
   const applyRect = useCallback((rect: FrameRect) => {
@@ -85,7 +96,6 @@ export function InteractiveFrame({
     const w = Math.min(Math.max(rect.w, minRef.current.w), maxW);
     const h = Math.min(Math.max(rect.h, minRef.current.h), maxH);
 
-    // Keep most of the frame on-screen relative to the viewport
     const absLeft = slotBox.left + rect.x;
     const absTop = slotBox.top + rect.y;
     const pad = 24;
@@ -94,8 +104,12 @@ export function InteractiveFrame({
 
     if (absLeft + w < pad) x += pad - (absLeft + w);
     if (absTop + h < pad) y += pad - (absTop + h);
-    if (absLeft > window.innerWidth - pad) x -= absLeft - (window.innerWidth - pad);
-    if (absTop > window.innerHeight - pad) y -= absTop - (window.innerHeight - pad);
+    if (absLeft > window.innerWidth - pad) {
+      x -= absLeft - (window.innerWidth - pad);
+    }
+    if (absTop > window.innerHeight - pad) {
+      y -= absTop - (window.innerHeight - pad);
+    }
 
     return { x, y, w, h };
   }, []);
@@ -105,25 +119,8 @@ export function InteractiveFrame({
     const slot = slotRef.current;
     if (!frame || !slot) return;
 
-    // Remeasure only before the user has moved/resized the frame
-    const hasMoved =
-      primedRef.current &&
-      (rectRef.current.x !== 0 ||
-        rectRef.current.y !== 0 ||
-        selectedRef.current ||
-        modeRef.current);
-
-    if (hasMoved) return;
-
-    // Temporarily clear locked size so we can measure natural layout
-    if (primedRef.current) {
-      frame.style.position = "relative";
-      frame.style.width = "";
-      frame.style.height = "";
-      frame.style.transform = "";
-      slot.style.width = "";
-      slot.style.height = "";
-    }
+    // Measure natural size once on first load — don't re-stretch later
+    if (primedRef.current) return;
 
     const box = frame.getBoundingClientRect();
     const w = Math.ceil(box.width);
@@ -131,8 +128,8 @@ export function InteractiveFrame({
     if (w < 40 || h < 40) return;
 
     minRef.current = {
-      w: Math.max(MIN_W, Math.round(w * 0.85)),
-      h: Math.max(MIN_H, Math.round(h * 0.85)),
+      w: Math.max(baseMinW, Math.round(w * (isSticker ? 0.7 : 0.85))),
+      h: Math.max(baseMinH, Math.round(h * (isSticker ? 0.7 : 0.85))),
     };
     slot.style.width = `${w}px`;
     slot.style.height = `${h}px`;
@@ -141,7 +138,7 @@ export function InteractiveFrame({
     frame.style.top = "0";
     applyRect({ x: 0, y: 0, w, h });
     primedRef.current = true;
-  }, [applyRect]);
+  }, [applyRect, baseMinH, baseMinW, isSticker]);
 
   useEffect(() => {
     let cancelled = false;
@@ -152,7 +149,9 @@ export function InteractiveFrame({
     };
 
     run();
+    // Retry after fonts in case first measure was too early / zero
     void document.fonts?.ready.then(run);
+    const t = window.setTimeout(run, 120);
 
     const onResize = () => {
       if (!primedRef.current) return;
@@ -161,6 +160,7 @@ export function InteractiveFrame({
     window.addEventListener("resize", onResize);
     return () => {
       cancelled = true;
+      window.clearTimeout(t);
       window.removeEventListener("resize", onResize);
     };
   }, [applyRect, clampToBounds, primeFromDom]);
@@ -179,6 +179,7 @@ export function InteractiveFrame({
     if (!selected) return;
 
     const onPointerDown = (event: PointerEvent) => {
+      if (isSticker) return;
       const frame = frameRef.current;
       if (!frame) return;
       if (frame.contains(event.target as Node)) return;
@@ -188,6 +189,7 @@ export function InteractiveFrame({
     const onKeyDown = (event: KeyboardEvent) => {
       if (!selectedRef.current) return;
       if (event.key !== "Escape") return;
+      if (isSticker) return;
       event.preventDefault();
       deselect();
       frameRef.current?.blur();
@@ -199,7 +201,7 @@ export function InteractiveFrame({
       window.removeEventListener("pointerdown", onPointerDown, true);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selected, deselect]);
+  }, [selected, deselect, isSticker]);
 
   const resizeFromHandle = (
     handle: Handle,
@@ -231,7 +233,6 @@ export function InteractiveFrame({
       h = Math.max(minRef.current.h, origin.h + dy);
     }
 
-    // Corner handles: keep aspect ratio of the origin box
     if (
       (handle === "nw" || handle === "ne" || handle === "sw" || handle === "se") &&
       origin.w > 0 &&
@@ -279,38 +280,47 @@ export function InteractiveFrame({
         );
       });
     },
+    // resizeFromHandle closes over minRef — safe across renders
     [applyRect, clampToBounds],
   );
 
-  const onPointerUp = useCallback((event: PointerEvent) => {
-    const mode = modeRef.current;
-    if (!mode) return;
-    modeRef.current = null;
-    const frame = frameRef.current;
-    frame?.releasePointerCapture?.(event.pointerId);
-    frame?.classList.remove("is-dragging", "is-resizing");
-    window.removeEventListener("pointermove", onPointerMove);
-    window.removeEventListener("pointerup", onPointerUp);
-    window.removeEventListener("pointercancel", onPointerUp);
-  }, [onPointerMove]);
+  const endInteraction = useCallback(
+    (event: PointerEvent) => {
+      if (!modeRef.current) return;
+      modeRef.current = null;
+      const frame = frameRef.current;
+      try {
+        frame?.releasePointerCapture?.(event.pointerId);
+      } catch {
+        /* already released */
+      }
+      frame?.classList.remove("is-dragging", "is-resizing");
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", endInteraction);
+      window.removeEventListener("pointercancel", endInteraction);
+    },
+    [onPointerMove],
+  );
 
-  const beginInteraction = (
-    event: ReactPointerEvent,
-    mode: Mode,
-  ) => {
+  const beginInteraction = (event: ReactPointerEvent, mode: Mode) => {
     event.preventDefault();
     event.stopPropagation();
     primeFromDom();
     setSelectedState(true);
     modeRef.current = mode;
-    frameRef.current?.setPointerCapture?.(event.pointerId);
-    frameRef.current?.focus({ preventScroll: true });
-    frameRef.current?.classList.add(
+    const frame = frameRef.current;
+    try {
+      frame?.setPointerCapture?.(event.pointerId);
+    } catch {
+      /* ignore */
+    }
+    frame?.focus({ preventScroll: true });
+    frame?.classList.add(
       mode?.type === "resize" ? "is-resizing" : "is-dragging",
     );
     window.addEventListener("pointermove", onPointerMove);
-    window.addEventListener("pointerup", onPointerUp);
-    window.addEventListener("pointercancel", onPointerUp);
+    window.addEventListener("pointerup", endInteraction);
+    window.addEventListener("pointercancel", endInteraction);
   };
 
   const onSurfacePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -338,6 +348,7 @@ export function InteractiveFrame({
 
   const onKeyDownFrame = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
+      if (isSticker) return;
       event.preventDefault();
       deselect();
       return;
@@ -364,7 +375,8 @@ export function InteractiveFrame({
 
   const rootClass = [
     "interactive-frame",
-    selected ? "is-selected" : "",
+    isSticker ? "interactive-frame--sticker" : "",
+    selected || isSticker ? "is-selected" : "",
     className,
   ]
     .filter(Boolean)
@@ -377,7 +389,7 @@ export function InteractiveFrame({
         className={`interactive-frame__surface ${surfaceClassName}`.trim()}
         role="button"
         tabIndex={0}
-        aria-pressed={selected}
+        aria-pressed={selected || isSticker}
         aria-labelledby={labelId}
         aria-label={ariaLabel}
         onPointerDown={onSurfacePointerDown}
@@ -385,7 +397,6 @@ export function InteractiveFrame({
         onDoubleClick={(event) => event.preventDefault()}
         style={
           {
-            // Before priming, flow-size naturally; after, absolute + measured.
             touchAction: "none",
           } satisfies CSSProperties
         }
@@ -394,18 +405,21 @@ export function InteractiveFrame({
           {ariaLabel}
         </span>
 
-        {/* Default L-corners (match existing hero look) */}
-        <div className="interactive-frame__corners" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
+        {!isSticker ? (
+          <div className="interactive-frame__corners" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        ) : null}
 
         <div className="interactive-frame__content">{children}</div>
 
-        {/* Selection handles — visible only when selected */}
-        <div className="interactive-frame__handles" aria-hidden={!selected}>
+        <div
+          className="interactive-frame__handles"
+          aria-hidden={!(selected || isSticker)}
+        >
           {HANDLES.map((handle) => (
             <span
               key={handle}

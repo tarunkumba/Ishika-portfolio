@@ -9,3 +9,12 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Local Framer dumps / kits (not part of the app build)
+_vendor-*/
+src/components/kenney_toy-car-kit/
+src/components/*-framer-*/
+src/components/*-framer-app-optimized/
+src/components/*.glb
+src/components/Untitled
+src/components/vinyl-player/
