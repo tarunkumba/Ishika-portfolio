@@ -1,20 +1,26 @@
 .framer-card-stack {
   position: relative;
   width: 100%;
-  background: #ffffff;
-  isolation: isolate;
+  background: transparent;
+}
+
+.framer-card-stack__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+.framer-card-stack__window {
+  margin-inline: auto;
+  overflow: hidden;
 }
 
 .framer-card-stack__frame {
   display: block;
-  width: 100%;
-  height: clamp(480px, 72vh, 760px);
+  width: 1200px;
+  height: 800px;
+  margin: 0;
+  padding: 0;
   border: 0;
-  background: #ffffff;
-}
-
-@media (max-width: 809px) {
-  .framer-card-stack__frame {
-    height: 620px;
-  }
+  background: transparent;
+  transform-origin: top left;
 }

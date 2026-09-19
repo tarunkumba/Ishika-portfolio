@@ -183,7 +183,8 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  padding: 5.25rem clamp(1rem, 3vw, 2.5rem) 0;
+  padding: 5.25rem clamp(1rem, 3vw, 2.5rem)
+    clamp(2rem, 5vh, 3.5rem);
   overflow: visible;
 }
 

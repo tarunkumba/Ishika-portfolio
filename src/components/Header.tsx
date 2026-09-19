@@ -8,12 +8,14 @@ import {
   GameController02Icon,
   Home01Icon,
   Mail01Icon,
+  IdCardIcon,
 } from "@hugeicons/core-free-icons";
 import "./Header.css";
 
 export const copy = {
   home: "Home",
   work: "Work",
+  about: "About",
   playground: "Playground",
   contactMe: "Contact me",
 } as const;
@@ -30,6 +32,12 @@ const links = [
     label: copy.work,
     external: false,
     icon: Briefcase01Icon,
+  },
+  {
+    href: "/about",
+    label: copy.about,
+    external: false,
+    icon: IdCardIcon,
   },
   {
     href: "/playground",
@@ -49,11 +57,21 @@ export function Header() {
   const pathname = usePathname();
   const pillRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<(typeof links)[number]["href"]>(
-    pathname === "/playground" ? "/playground" : "#top",
+    pathname === "/playground"
+      ? "/playground"
+      : pathname === "/about"
+        ? "/about"
+        : "#top",
   );
 
   useEffect(() => {
-    setActive(pathname === "/playground" ? "/playground" : "#top");
+    setActive(
+      pathname === "/playground"
+        ? "/playground"
+        : pathname === "/about"
+          ? "/about"
+          : "#top",
+    );
   }, [pathname]);
 
   const onPillMove = useCallback((event: MouseEvent<HTMLDivElement>) => {

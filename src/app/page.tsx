@@ -1,12 +1,14 @@
 import { Intro } from "@/components/Intro";
-import { FramerCardStack } from "@/components/FramerCardStack";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { AboutSection } from "@/components/AboutSection";
 import { ClotheslineGallery } from "@/components/ClotheslineGallery";
 
 export default function HomePage() {
   return (
     <>
       <Intro />
-      <FramerCardStack />
+      <ProjectsSection />
+      <AboutSection variant="home" />
       <ClotheslineGallery />
     </>
   );
